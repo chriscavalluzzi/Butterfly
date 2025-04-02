@@ -41,16 +41,17 @@ class PathEraserHandler extends Handler<PathEraserTool> {
   Future<void> onPointerMove(
       PointerMoveEvent event, EventContext context) async {
     _currentPos = event.localPosition;
+    if (_currentlyErasing) return;
     final currentIndex = context.getCurrentIndex();
     final transform = currentIndex.transformCubit.state;
-    final utilities = currentIndex.utilities;
-    final state = context.getState();
     final globalPos = transform.localToGlobal(event.localPosition);
     final size = data.strokeWidth;
     final shouldErase =
         _lastErased == null || (globalPos - _lastErased!).distance > size;
+    if (!shouldErase) return;
+    final utilities = currentIndex.utilities;
+    final state = context.getState();
     context.refresh();
-    if (_currentlyErasing || !shouldErase) return;
     _currentlyErasing = true;
     _lastErased = globalPos;
     Iterable<Renderer<PadElement>> ray =
