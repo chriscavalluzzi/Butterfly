@@ -876,14 +876,17 @@ class CurrentIndexCubit extends Cubit<CurrentIndex> {
   }
 
   Future<void> loadElements(DocumentState docState) async {
+    // DEV: No
     if (docState is! DocumentLoaded) return;
     final document = docState.data;
     final assetService = docState.assetService;
     final page = docState.page;
     for (var e in state.cameraViewport.unbakedElements) {
+      // DEV: No
       e.dispose();
     }
     for (var e in state.cameraViewport.bakedElements) {
+      // DEV: Yes
       e.dispose();
     }
     final renderers = page.layers
@@ -1192,6 +1195,7 @@ class CurrentIndexCubit extends Cubit<CurrentIndex> {
     }
     if (reset) {
       loadElements(current);
+      print('>>>>> LOAD ELEMENTS <<<<<');
     }
     if (reset || shouldRefresh?.call() == true) {
       refresh(current);

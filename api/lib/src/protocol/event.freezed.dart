@@ -1023,15 +1023,15 @@ class _$ElementsChangedCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class ElementsRemoved extends DocumentEvent {
-  const ElementsRemoved(final List<String> elements, {final String? $type})
+  const ElementsRemoved(final List<PadElement> elements, {final String? $type})
       : _elements = elements,
         $type = $type ?? 'elementsRemoved',
         super._();
   factory ElementsRemoved.fromJson(Map<String, dynamic> json) =>
       _$ElementsRemovedFromJson(json);
 
-  final List<String> _elements;
-  List<String> get elements {
+  final List<PadElement> _elements;
+  List<PadElement> get elements {
     if (_elements is EqualUnmodifiableListView) return _elements;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_elements);
@@ -1080,7 +1080,7 @@ abstract mixin class $ElementsRemovedCopyWith<$Res>
           ElementsRemoved value, $Res Function(ElementsRemoved) _then) =
       _$ElementsRemovedCopyWithImpl;
   @useResult
-  $Res call({List<String> elements});
+  $Res call({List<PadElement> elements});
 }
 
 /// @nodoc
@@ -1101,7 +1101,7 @@ class _$ElementsRemovedCopyWithImpl<$Res>
       null == elements
           ? _self._elements
           : elements // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as List<PadElement>,
     ));
   }
 }

@@ -135,13 +135,15 @@ Map<String, dynamic> _$ElementsChangedToJson(ElementsChanged instance) =>
     };
 
 ElementsRemoved _$ElementsRemovedFromJson(Map json) => ElementsRemoved(
-      (json['elements'] as List<dynamic>).map((e) => e as String).toList(),
+      (json['elements'] as List<dynamic>)
+          .map((e) => PadElement.fromJson(Map<String, dynamic>.from(e as Map)))
+          .toList(),
       $type: json['type'] as String?,
     );
 
 Map<String, dynamic> _$ElementsRemovedToJson(ElementsRemoved instance) =>
     <String, dynamic>{
-      'elements': instance.elements,
+      'elements': instance.elements.map((e) => e.toJson()).toList(),
       'type': instance.$type,
     };
 

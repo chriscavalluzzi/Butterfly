@@ -169,9 +169,9 @@ class LabelHandler extends Handler<LabelTool>
       } else {
         final page = context.getPage();
         if (page == null) return;
-        final id = (labelRenderer.element as PadElement).id;
-        if (id == null) return;
-        context.getDocumentBloc().add(ElementsRemoved([id]));
+        final element = (labelRenderer.element as PadElement);
+        if (element.id == null) return;
+        context.getDocumentBloc().add(ElementsRemoved([element]));
         _context = _createContext(document, element: labelRenderer.element);
       }
     }
@@ -290,12 +290,11 @@ class LabelHandler extends Handler<LabelTool>
     if (context == null) return;
     final element = context.element;
     if (element == null) return;
-    final id = element.id;
     final isEmpty = context.isEmpty;
     if (context.isCreating && !isEmpty) {
       bloc.add(ElementsCreated([element]));
-    } else if (!context.isCreating && isEmpty && id != null) {
-      bloc.add(ElementsRemoved([id]));
+    } else if (!context.isCreating && isEmpty && element.id != null) {
+      bloc.add(ElementsRemoved([element]));
     }
   }
 

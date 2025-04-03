@@ -53,7 +53,7 @@ sealed class DocumentEvent extends ReplayEvent with _$DocumentEvent {
   ) = ElementsChanged;
 
   const factory DocumentEvent.elementsRemoved(
-    List<String> elements,
+    List<PadElement> elements,
   ) = ElementsRemoved;
 
   const factory DocumentEvent.elementsArranged(

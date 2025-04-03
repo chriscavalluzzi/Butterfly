@@ -100,7 +100,10 @@ ContextMenuBuilder buildElementsContextMenu(
               if (state is! DocumentLoadSuccess) return;
               bloc.add(
                 ElementsRemoved(
-                  renderers.map((r) => r.element.id).nonNulls.toList(),
+                  renderers
+                      .map((r) => r.element)
+                      .where((e) => e.id != null)
+                      .toList(),
                 ),
               );
             },

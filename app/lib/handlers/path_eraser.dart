@@ -3,7 +3,7 @@ part of 'handler.dart';
 class PathEraserHandler extends Handler<PathEraserTool> {
   bool _currentlyErasing = false;
   Offset? _currentPos, _lastErased;
-  final Set<String> _erased = {};
+  final Set<PadElement> _erased = {};
   PathEraserHandler(super.data);
 
   @override
@@ -17,8 +17,8 @@ class PathEraserHandler extends Handler<PathEraserTool> {
       ];
 
   @override
-  Map<String, RendererState> get rendererStates =>
-      Map.fromEntries(_erased.map((e) => MapEntry(e, RendererState.hidden)));
+  Map<String, RendererState> get rendererStates => Map.fromEntries(
+      _erased.map((e) => MapEntry(e.id!, RendererState.hidden)));
 
   @override
   void onPointerHover(PointerHoverEvent event, EventContext context) {
@@ -62,16 +62,17 @@ class PathEraserHandler extends Handler<PathEraserTool> {
     final page = state?.page;
     if (page == null) return;
     if (!data.eraseElements) ray = ray.where((e) => e.element.isStroke());
-    var ids = ray.map((e) => e.element.id).nonNulls;
-    _erased.addAll(ids);
+    // var elements = ray.map((e) => e.element.id).nonNulls;
+    Iterable<PadElement> elements =
+        ray.map((e) => e.element).where((e) => e.id != null);
+    _erased.addAll(elements);
     _currentlyErasing = false;
   }
 
   @override
   void onPointerUp(PointerUpEvent event, EventContext context) {
     if (_erased.isNotEmpty) {
-      // context.getDocumentBloc().add(ElementsRemoved(_erased.toList()));
-      context.getDocumentBloc().add(ElementsCreated([]));
+      context.getDocumentBloc().add(ElementsRemoved(_erased.toList()));
     }
   }
 

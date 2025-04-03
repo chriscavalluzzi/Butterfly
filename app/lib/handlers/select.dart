@@ -444,7 +444,7 @@ class SelectHandler extends Handler<SelectTool> {
     if (state is! DocumentLoadSuccess) return;
     if (cut) {
       bloc.add(ElementsRemoved(
-          _selected.map((r) => r.element.id).nonNulls.toList()));
+          _selected.map((r) => r.element).where((e) => e.id != null).toList()));
     }
     final point = getSelectionRect()?.topLeft;
     if (point == null) return;
@@ -495,8 +495,10 @@ class SelectHandler extends Handler<SelectTool> {
           CallbackAction<DeleteCharacterIntent>(onInvoke: (intent) {
         final state = bloc.state;
         if (state is! DocumentLoadSuccess) return null;
-        context.read<DocumentBloc>().add(ElementsRemoved(
-            _selected.map((r) => r.element.id).nonNulls.toList()));
+        context.read<DocumentBloc>().add(ElementsRemoved(_selected
+            .map((r) => r.element)
+            .where((e) => e.id != null)
+            .toList()));
         _selected.clear();
         bloc.refresh();
         return null;

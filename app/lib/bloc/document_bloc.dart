@@ -332,10 +332,12 @@ class DocumentBloc extends ReplayBloc<DocumentEvent, DocumentState> {
       if (event.elements.isEmpty) return;
       final newPage = current.page.mapLayers((e) => e.copyWith(
             content: e.content
-                .where((element) => !event.elements.contains(element.id))
+                .where((element) => !event.elements.contains(
+                    element)) // TODO: Check this is actually removing stuff, otherwise fall back to using ids
                 .toList(),
           ));
       current.currentIndexCubit.removeSelection(event.elements);
+
       // Remove unused assets
       final unusedAssets = <String>{};
       event.elements.whereType<SourcedElement>().forEach((element) {
@@ -344,11 +346,20 @@ class DocumentBloc extends ReplayBloc<DocumentEvent, DocumentState> {
           unusedAssets.add(element.source);
         }
       });
+      print('>>>>> UNUSED ASSETS: ${unusedAssets.length}');
+
+      // final renderers = state.cameraViewport.visibleElements;
+
+      // final renderers = elements
+      //     .map((e) => Renderer.fromInstance(e, current.currentLayer))
+      //     .toList();
+
       final data = current.data.removeAssets(unusedAssets.toList());
       _saveState(
         emit,
         state: current.copyWith(page: newPage, data: data),
         reset: true,
+        // shouldRefresh: () => true,
       );
     }, transformer: sequential());
     on<DocumentDescriptionChanged>((event, emit) {
