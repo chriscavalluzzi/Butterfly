@@ -645,11 +645,14 @@ class CurrentIndexCubit extends Cubit<CurrentIndex> {
   Renderer? getRenderer(PadElement element) =>
       renderers.firstWhereOrNull((renderer) => renderer.element == element);
 
+  bool _isBaking = false;
   Future<void> bake(DocumentLoaded blocState,
       {Size? viewportSize,
       double? pixelRatio,
       bool reset = false,
       bool resetAllLayers = false}) async {
+    if (_isBaking) return;
+    _isBaking = true;
     var cameraViewport = state.cameraViewport;
     final resolution = state.settingsCubit.state.renderResolution;
     var size = viewportSize ?? cameraViewport.toSize();
@@ -712,6 +715,8 @@ class CurrentIndexCubit extends Cubit<CurrentIndex> {
     }
     canvas.scale(ratio);
 
+    // FAILS BELOW THIS
+
     // Wait one frame
     await Future.delayed(const Duration(milliseconds: 1));
 
@@ -734,8 +739,11 @@ class CurrentIndexCubit extends Cubit<CurrentIndex> {
       renderBakedLayers: false,
     ).paint(canvas, size);
 
+    // FAILS BELOW THIS
+
     var picture = recorder.endRecording();
 
+    // FAILS HERE
     final newImage = await picture.toImage(imageWidth, imageHeight);
 
     var currentRenderers = state.cameraViewport.unbakedElements;
@@ -752,7 +760,9 @@ class CurrentIndexCubit extends Cubit<CurrentIndex> {
     var belowLayerImage = cameraViewport.belowLayerImage;
     var aboveLayerImage = cameraViewport.aboveLayerImage;
 
+    // FAILS BEFORE THIS
     if (resetAllLayers) {
+      print('>>>>> RESET ALL');
       final belowLayerRecorder = ui.PictureRecorder();
       final belowLayerCanvas = ui.Canvas(belowLayerRecorder);
       belowLayerCanvas.scale(ratio);
@@ -823,6 +833,7 @@ class CurrentIndexCubit extends Cubit<CurrentIndex> {
             visibleElements: visibleElements,
             belowLayerImage: belowLayerImage,
             aboveLayerImage: aboveLayerImage)));
+    _isBaking = false;
   }
 
   Future<ByteData?> render(NoteData document, DocumentPage page,
