@@ -43,6 +43,8 @@ enum SelectMode { rectangle, lasso }
 
 enum LaserAnimation { fade, path }
 
+enum EraseShapesMode { disabled, edgesOnly, anywhere }
+
 enum ToolCategory { import, normal, surface, action, view }
 
 enum BarcodeType {
@@ -110,6 +112,7 @@ sealed class Tool with _$Tool {
     @Default('') String name,
     @Default('') String displayIcon,
     @Default(5) double strokeWidth,
+    @Default(EraseShapesMode.edgesOnly) EraseShapesMode eraseShapesMode,
     @Default(false) bool eraseElements,
   }) = EraserTool;
 
@@ -117,6 +120,7 @@ sealed class Tool with _$Tool {
     @Default('') String name,
     @Default('') String displayIcon,
     @Default(5) double strokeWidth,
+    @Default(EraseShapesMode.edgesOnly) EraseShapesMode eraseShapesMode,
     @Default(false) bool eraseElements,
   }) = PathEraserTool;
 

@@ -823,6 +823,7 @@ class EraserTool extends Tool {
       {this.name = '',
       this.displayIcon = '',
       this.strokeWidth = 5,
+      this.eraseShapesMode = EraseShapesMode.edgesOnly,
       this.eraseElements = false,
       final String? $type})
       : $type = $type ?? 'eraser',
@@ -838,6 +839,8 @@ class EraserTool extends Tool {
   final String displayIcon;
   @JsonKey()
   final double strokeWidth;
+  @JsonKey()
+  final EraseShapesMode eraseShapesMode;
   @JsonKey()
   final bool eraseElements;
 
@@ -861,7 +864,7 @@ class EraserTool extends Tool {
 
   @override
   String toString() {
-    return 'Tool.eraser(name: $name, displayIcon: $displayIcon, strokeWidth: $strokeWidth, eraseElements: $eraseElements)';
+    return 'Tool.eraser(name: $name, displayIcon: $displayIcon, strokeWidth: $strokeWidth, eraseShapesMode: $eraseShapesMode, eraseElements: $eraseElements)';
   }
 }
 
@@ -876,6 +879,7 @@ abstract mixin class $EraserToolCopyWith<$Res> implements $ToolCopyWith<$Res> {
       {String name,
       String displayIcon,
       double strokeWidth,
+      EraseShapesMode eraseShapesMode,
       bool eraseElements});
 }
 
@@ -894,6 +898,7 @@ class _$EraserToolCopyWithImpl<$Res> implements $EraserToolCopyWith<$Res> {
     Object? name = null,
     Object? displayIcon = null,
     Object? strokeWidth = null,
+    Object? eraseShapesMode = null,
     Object? eraseElements = null,
   }) {
     return _then(EraserTool(
@@ -909,6 +914,10 @@ class _$EraserToolCopyWithImpl<$Res> implements $EraserToolCopyWith<$Res> {
           ? _self.strokeWidth
           : strokeWidth // ignore: cast_nullable_to_non_nullable
               as double,
+      eraseShapesMode: null == eraseShapesMode
+          ? _self.eraseShapesMode
+          : eraseShapesMode // ignore: cast_nullable_to_non_nullable
+              as EraseShapesMode,
       eraseElements: null == eraseElements
           ? _self.eraseElements
           : eraseElements // ignore: cast_nullable_to_non_nullable
@@ -924,6 +933,7 @@ class PathEraserTool extends Tool {
       {this.name = '',
       this.displayIcon = '',
       this.strokeWidth = 5,
+      this.eraseShapesMode = EraseShapesMode.edgesOnly,
       this.eraseElements = false,
       final String? $type})
       : $type = $type ?? 'pathEraser',
@@ -939,6 +949,8 @@ class PathEraserTool extends Tool {
   final String displayIcon;
   @JsonKey()
   final double strokeWidth;
+  @JsonKey()
+  final EraseShapesMode eraseShapesMode;
   @JsonKey()
   final bool eraseElements;
 
@@ -962,7 +974,7 @@ class PathEraserTool extends Tool {
 
   @override
   String toString() {
-    return 'Tool.pathEraser(name: $name, displayIcon: $displayIcon, strokeWidth: $strokeWidth, eraseElements: $eraseElements)';
+    return 'Tool.pathEraser(name: $name, displayIcon: $displayIcon, strokeWidth: $strokeWidth, eraseShapesMode: $eraseShapesMode, eraseElements: $eraseElements)';
   }
 }
 
@@ -978,6 +990,7 @@ abstract mixin class $PathEraserToolCopyWith<$Res>
       {String name,
       String displayIcon,
       double strokeWidth,
+      EraseShapesMode eraseShapesMode,
       bool eraseElements});
 }
 
@@ -997,6 +1010,7 @@ class _$PathEraserToolCopyWithImpl<$Res>
     Object? name = null,
     Object? displayIcon = null,
     Object? strokeWidth = null,
+    Object? eraseShapesMode = null,
     Object? eraseElements = null,
   }) {
     return _then(PathEraserTool(
@@ -1012,6 +1026,10 @@ class _$PathEraserToolCopyWithImpl<$Res>
           ? _self.strokeWidth
           : strokeWidth // ignore: cast_nullable_to_non_nullable
               as double,
+      eraseShapesMode: null == eraseShapesMode
+          ? _self.eraseShapesMode
+          : eraseShapesMode // ignore: cast_nullable_to_non_nullable
+              as EraseShapesMode,
       eraseElements: null == eraseElements
           ? _self.eraseElements
           : eraseElements // ignore: cast_nullable_to_non_nullable

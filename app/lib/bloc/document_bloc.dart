@@ -1154,12 +1154,14 @@ class DocumentBloc extends ReplayBloc<DocumentEvent, DocumentState> {
     CameraTransform? transform,
     bool useCollection = false,
     bool useLayer = false,
+    bool? shapeEdgesOnly,
   }) async {
     return rayCastRect(
       Rect.fromCircle(center: globalPosition, radius: radius),
       transform: transform,
       useCollection: useCollection,
       useLayer: useLayer,
+      shapeEdgesOnly: shapeEdgesOnly,
     );
   }
 
@@ -1169,6 +1171,7 @@ class DocumentBloc extends ReplayBloc<DocumentEvent, DocumentState> {
     bool useCollection = false,
     bool useLayer = false,
     bool? full,
+    bool? shapeEdgesOnly,
   }) async {
     final state = this.state;
     if (state is! DocumentLoadSuccess) return {};
@@ -1185,6 +1188,7 @@ class DocumentBloc extends ReplayBloc<DocumentEvent, DocumentState> {
         useCollection ? state.currentCollection : null,
         useLayer ? state.currentLayer : null,
         full,
+        shapeEdgesOnly ?? false,
       ),
     ).then((value) => value.map((e) => renderers[e]).toSet());
   }
@@ -1235,6 +1239,7 @@ class _RayCastParams {
   final double size;
   final String? collection, layer;
   final bool full;
+  final bool shapeEdgesOnly;
 
   const _RayCastParams(
     this.invisibleLayers,
@@ -1244,6 +1249,7 @@ class _RayCastParams {
     this.collection,
     this.layer,
     this.full,
+    this.shapeEdgesOnly,
   );
 }
 

@@ -1,5 +1,7 @@
 part of '../selection.dart';
 
+// TODO: Add option here too
+
 class EraserToolSelection extends ToolSelection<EraserTool> {
   EraserToolSelection(super.selected);
 

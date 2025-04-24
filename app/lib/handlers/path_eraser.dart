@@ -59,10 +59,21 @@ class PathEraserHandler extends Handler<PathEraserTool> {
               size,
               useCollection: utilities.lockCollection,
               useLayer: utilities.lockLayer,
+              shapeEdgesOnly: data.eraseShapesMode == EraseShapesMode.edgesOnly,
             );
     final page = state?.page;
     if (page == null) return;
     if (!data.eraseElements) ray = ray.where((e) => e.element.isStroke());
+    var test = ray.toList();
+    for (var i in test) {
+      print(i);
+    }
+
+    ray = ray.map((e) {
+      if (e.element is ShapeElement) {}
+      return e;
+    });
+
     var ids = ray.map((e) => e.element.id).nonNulls;
     _erased.addAll(ids);
     _currentlyErasing = false;

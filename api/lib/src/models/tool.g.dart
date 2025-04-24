@@ -146,6 +146,9 @@ EraserTool _$EraserToolFromJson(Map json) => EraserTool(
       name: json['name'] as String? ?? '',
       displayIcon: json['displayIcon'] as String? ?? '',
       strokeWidth: (json['strokeWidth'] as num?)?.toDouble() ?? 5,
+      eraseShapesMode: $enumDecodeNullable(
+              _$EraseShapesModeEnumMap, json['eraseShapesMode']) ??
+          EraseShapesMode.edgesOnly,
       eraseElements: json['eraseElements'] as bool? ?? false,
       $type: json['type'] as String?,
     );
@@ -155,14 +158,24 @@ Map<String, dynamic> _$EraserToolToJson(EraserTool instance) =>
       'name': instance.name,
       'displayIcon': instance.displayIcon,
       'strokeWidth': instance.strokeWidth,
+      'eraseShapesMode': _$EraseShapesModeEnumMap[instance.eraseShapesMode]!,
       'eraseElements': instance.eraseElements,
       'type': instance.$type,
     };
+
+const _$EraseShapesModeEnumMap = {
+  EraseShapesMode.disabled: 'disabled',
+  EraseShapesMode.edgesOnly: 'edgesOnly',
+  EraseShapesMode.anywhere: 'anywhere',
+};
 
 PathEraserTool _$PathEraserToolFromJson(Map json) => PathEraserTool(
       name: json['name'] as String? ?? '',
       displayIcon: json['displayIcon'] as String? ?? '',
       strokeWidth: (json['strokeWidth'] as num?)?.toDouble() ?? 5,
+      eraseShapesMode: $enumDecodeNullable(
+              _$EraseShapesModeEnumMap, json['eraseShapesMode']) ??
+          EraseShapesMode.edgesOnly,
       eraseElements: json['eraseElements'] as bool? ?? false,
       $type: json['type'] as String?,
     );
@@ -172,6 +185,7 @@ Map<String, dynamic> _$PathEraserToolToJson(PathEraserTool instance) =>
       'name': instance.name,
       'displayIcon': instance.displayIcon,
       'strokeWidth': instance.strokeWidth,
+      'eraseShapesMode': _$EraseShapesModeEnumMap[instance.eraseShapesMode]!,
       'eraseElements': instance.eraseElements,
       'type': instance.$type,
     };
